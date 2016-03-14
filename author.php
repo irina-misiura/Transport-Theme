@@ -43,7 +43,7 @@
 				<span class="comments"><?php comments_popup_link( __( 'Leave your thoughts', 'transport' ), __( '1 Comment', 'transport' ), __( '% Comments', 'transport' )); ?></span>
 				<!-- /post details -->
 
-				<?php html5wp_excerpt('html5wp_index'); // Build your custom callback length in functions.php ?>
+				<?php transport_excerpt('transport_index'); // Build your custom callback length in functions.php ?>
 
 				<br class="clear">
 

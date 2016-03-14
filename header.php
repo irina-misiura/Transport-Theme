@@ -5,8 +5,8 @@
 		<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
 
 		<link href="//www.google-analytics.com" rel="dns-prefetch">
-        <link href="<?php echo get_template_directory_uri(); ?>/img/icons/favicon.ico" rel="shortcut icon">
-        <link href="<?php echo get_template_directory_uri(); ?>/img/icons/touch.png" rel="apple-touch-icon-precomposed">
+        <link href="<?php echo get_template_directory_uri(); ?>/assets/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="<?php echo get_template_directory_uri(); ?>/assets/img/icons/touch.png" rel="apple-touch-icon-precomposed">
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,27 +24,50 @@
 
 	</head>
 	<body <?php body_class(); ?>>
-
+		<?php global $transport; ?>
 		<!-- wrapper -->
 		<div class="wrapper">
 
+			<div class="top-bar">
+				<div class="row">
+					<ul class="top-bar-right">
+						<?php if($transport['header-phone']):?>
+					        <li>
+						        <span class="dashicons dashicons-phone"></span>
+						        <?php echo $transport['header-phone']; ?>
+						    </li>
+						<?php endif; ?>
+						<?php if($transport['header-email']):?>
+							<li>
+					        	<span class="dashicons dashicons-email-alt"></span>
+					        	<a href="mailto:<?php echo $transport['header-email']; ?>"><?php echo $transport['header-email']; ?></a>        
+					       	</li>
+						<?php endif; ?>
+				    </ul>
+				</div>
+			</div>
+
 			<!-- header -->
-			<header class="header clear" role="banner">
+			<header class="header" role="banner">
+				<div class="nav-wrap">
+					<div class="row">
 
-					<!-- logo -->
-					<div class="logo">
-						<a href="<?php echo home_url(); ?>">
-							<!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
-							<img src="<?php echo get_template_directory_uri(); ?>/img/logo.svg" alt="Logo" class="logo-img">
-						</a>
+						<!-- logo -->
+						<div class="logo">
+							<a href="<?php echo home_url(); ?>">
+								<!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
+								<img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.svg" alt="Logo" class="logo-img">
+							</a>
+						</div>
+						<!-- /logo -->
+
+						<!-- nav -->
+						<nav class="float-right nav" role="navigation">
+							<?php transport_nav(); ?>
+						</nav>
+						<!-- /nav -->
 					</div>
-					<!-- /logo -->
-
-					<!-- nav -->
-					<nav class="nav" role="navigation">
-						<?php transport_nav(); ?>
-					</nav>
-					<!-- /nav -->
-
+				</div>
 			</header>
 			<!-- /header -->
+			<div class="container">

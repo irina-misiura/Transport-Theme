@@ -1,27 +1,22 @@
 <?php
-/*
- *  Author: Todd Motto | @toddmotto
- *  URL: transport.com | @transport
- *  Custom functions, support, custom post types and more.
- */
 
 /*------------------------------------*\
 	External Modules/Files
 \*------------------------------------*/
 
-// Load any external files you have here
+
+/** Add Redux Framework */
+include_once 'inc/loader.php' ;
 
 /*------------------------------------*\
 	Theme Support
 \*------------------------------------*/
 
-if (!isset($content_width))
-{
+if (!isset($content_width)) {
     $content_width = 900;
 }
 
-if (function_exists('add_theme_support'))
-{
+if (function_exists('add_theme_support')) {
     // Add Menu Support
     add_theme_support('menus');
 
@@ -32,30 +27,11 @@ if (function_exists('add_theme_support'))
     add_image_size('small', 120, '', true); // Small Thumbnail
     add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
 
-    // Add Support for Custom Backgrounds - Uncomment below if you're going to use
-    /*add_theme_support('custom-background', array(
-	'default-color' => 'FFF',
-	'default-image' => get_template_directory_uri() . '/img/bg.jpg'
-    ));*/
-
-    // Add Support for Custom Header - Uncomment below if you're going to use
-    /*add_theme_support('custom-header', array(
-	'default-image'			=> get_template_directory_uri() . '/img/headers/default.jpg',
-	'header-text'			=> false,
-	'default-text-color'		=> '000',
-	'width'				=> 1000,
-	'height'			=> 198,
-	'random-default'		=> false,
-	'wp-head-callback'		=> $wphead_cb,
-	'admin-head-callback'		=> $adminhead_cb,
-	'admin-preview-callback'	=> $adminpreview_cb
-    ));*/
-
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
 
     // Localisation Support
-    load_theme_textdomain('transport', get_template_directory() . '/languages');
+    load_theme_textdomain('transport');
 }
 
 /*------------------------------------*\
@@ -63,97 +39,95 @@ if (function_exists('add_theme_support'))
 \*------------------------------------*/
 
 // Transport Theme navigation
-function transport_nav()
-{
+function transport_nav() {
 	wp_nav_menu(
 	array(
 		'theme_location'  => 'header-menu',
-		'menu'            => '',
-		'container'       => 'div',
-		'container_class' => 'menu-{menu slug}-container',
-		'container_id'    => '',
-		'menu_class'      => 'menu',
-		'menu_id'         => '',
-		'echo'            => true,
-		'fallback_cb'     => 'wp_page_menu',
-		'before'          => '',
-		'after'           => '',
-		'link_before'     => '',
-		'link_after'      => '',
-		'items_wrap'      => '<ul>%3$s</ul>',
-		'depth'           => 0,
-		'walker'          => ''
+		'menu_class'      => 'menu'
 		)
 	);
 }
 
+// Transport Theme navigation
+function homepage_sidebar_nav() {
+    wp_nav_menu(
+    array(
+        'theme_location'  => 'home-sidebar-menu',
+        'menu_class'      => 'menu'
+        )
+    );
+}
+
 // Load Transport Theme scripts (header.php)
-function transport_header_scripts()
-{
+function transport_header_scripts() {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
 
-    	wp_register_script('conditionizr', get_template_directory_uri() . '/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
+    	wp_register_script('conditionizr', get_template_directory_uri() . '/assets/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
         wp_enqueue_script('conditionizr'); // Enqueue it!
 
-        wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
+        wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
         wp_enqueue_script('modernizr'); // Enqueue it!
 
-        wp_register_script('transportscripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_register_script('slick', get_template_directory_uri() . '/assets/slick/slick.min.js', array('jquery')); // Modernizr
+        wp_enqueue_script('slick'); // Enqueue it!
+
+        wp_register_script('transportscripts', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('transportscripts'); // Enqueue it!
     }
 }
 
 // Load Transport Theme conditional scripts
-function transport_conditional_scripts()
-{
+function transport_conditional_scripts() {
     if (is_page('pagenamehere')) {
-        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
+        wp_register_script('scriptname', get_template_directory_uri() . '/assets/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
         wp_enqueue_script('scriptname'); // Enqueue it!
     }
 }
 
 // Load Transport Theme styles
-function transport_styles()
-{
-    wp_register_style('normalize', get_template_directory_uri() . '/normalize.css', array(), '1.0', 'all');
-    wp_enqueue_style('normalize'); // Enqueue it!
+function transport_styles() {
+    wp_register_style('normalize', get_template_directory_uri() . '/assets/normalize.css', array(), '1.0', 'all');
+    // wp_enqueue_style('normalize'); // Enqueue it!
+
+    wp_register_style('foundation', get_template_directory_uri() . '/assets/css/foundation.min.css');
+    wp_enqueue_style('foundation'); 
+
+    wp_enqueue_style('dashicons'); 
+
+    wp_register_style('slick', get_template_directory_uri() . '/assets/slick/slick.css');
+    wp_enqueue_style('slick'); 
 
     wp_register_style('transport', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
     wp_enqueue_style('transport'); // Enqueue it!
 }
 
 // Register Transport Theme Navigation
-function register_html5_menu()
-{
+function register_transport_menu() {
     register_nav_menus(array( // Using array to specify more menus if needed
         'header-menu' => __('Header Menu', 'transport'), // Main Navigation
-        'sidebar-menu' => __('Sidebar Menu', 'transport'), // Sidebar Navigation
+        'home-sidebar-menu' => __('Home Sidebar Menu', 'transport'), // Sidebar Navigation
         'extra-menu' => __('Extra Menu', 'transport') // Extra Navigation if needed (duplicate as many as you need!)
     ));
 }
 
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
-function my_wp_nav_menu_args($args = '')
-{
+function my_wp_nav_menu_args($args = '') {
     $args['container'] = false;
     return $args;
 }
 
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
-function my_css_attributes_filter($var)
-{
+function my_css_attributes_filter($var) {
     return is_array($var) ? array() : '';
 }
 
 // Remove invalid rel attribute values in the categorylist
-function remove_category_rel_from_category_list($thelist)
-{
+function remove_category_rel_from_category_list($thelist) {
     return str_replace('rel="category tag"', 'rel="tag"', $thelist);
 }
 
 // Add page slug to body class, love this - Credit: Starkers Wordpress Theme
-function add_slug_to_body_class($classes)
-{
+function add_slug_to_body_class($classes) {
     global $post;
     if (is_home()) {
         $key = array_search('blog', $classes);
@@ -170,34 +144,47 @@ function add_slug_to_body_class($classes)
 }
 
 // If Dynamic Sidebar Exists
-if (function_exists('register_sidebar'))
-{
-    // Define Sidebar Widget Area 1
+if (function_exists('register_sidebar')) {
+
     register_sidebar(array(
-        'name' => __('Widget Area 1', 'transport'),
-        'description' => __('Description for this widget-area...', 'transport'),
-        'id' => 'widget-area-1',
+        'name' => __('Footer Widget 1', 'transport'),
+        'id' => 'footer-widget-1',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget' => '</div>',
-        'before_title' => '<h3>',
+        'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>'
     ));
 
-    // Define Sidebar Widget Area 2
     register_sidebar(array(
-        'name' => __('Widget Area 2', 'transport'),
-        'description' => __('Description for this widget-area...', 'transport'),
-        'id' => 'widget-area-2',
+        'name' => __('Footer Widget 2', 'transport'),
+        'id' => 'footer-widget-2',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget' => '</div>',
-        'before_title' => '<h3>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>'
+    ));
+
+    register_sidebar(array(
+        'name' => __('Footer Widget 3', 'transport'),
+        'id' => 'footer-widget-3',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>'
+    ));
+
+    register_sidebar(array(
+        'name' => __('Newsletter Subscribe', 'transport'),
+        'id' => 'newsletter-subscribe',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>'
     ));
 }
 
 // Remove wp_head() injected Recent Comment styles
-function my_remove_recent_comments_style()
-{
+function my_remove_recent_comments_style() {
     global $wp_widget_factory;
     remove_action('wp_head', array(
         $wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
@@ -206,8 +193,7 @@ function my_remove_recent_comments_style()
 }
 
 // Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
-function html5wp_pagination()
-{
+function transport_pagination() {
     global $wp_query;
     $big = 999999999;
     echo paginate_links(array(
@@ -219,20 +205,17 @@ function html5wp_pagination()
 }
 
 // Custom Excerpts
-function html5wp_index($length) // Create 20 Word Callback for Index page Excerpts, call using html5wp_excerpt('html5wp_index');
-{
+function transport_index($length) {// Create 20 Word Callback for Index page Excerpts, call using transport_excerpt('transport_index');
     return 20;
 }
 
-// Create 40 Word Callback for Custom Post Excerpts, call using html5wp_excerpt('html5wp_custom_post');
-function html5wp_custom_post($length)
-{
+// Create 40 Word Callback for Custom Post Excerpts, call using transport_excerpt('transport_custom_post');
+function transport_custom_post($length) {
     return 40;
 }
 
 // Create the Custom Excerpts callback
-function html5wp_excerpt($length_callback = '', $more_callback = '')
-{
+function transport_excerpt($length_callback = '', $more_callback = '') {
     global $post;
     if (function_exists($length_callback)) {
         add_filter('excerpt_length', $length_callback);
@@ -248,42 +231,36 @@ function html5wp_excerpt($length_callback = '', $more_callback = '')
 }
 
 // Custom View Article link to Post
-function html5_blank_view_article($more)
-{
+function transport_view_article($more) {
     global $post;
-    return '... <a class="view-article" href="' . get_permalink($post->ID) . '">' . __('View Article', 'transport') . '</a>';
+    return '... <a class="view-article" href="' . get_permalink($post->ID) . '">' . __('Подробнее', 'transport') . '</a>';
 }
 
 // Remove Admin bar
-function remove_admin_bar()
-{
+function remove_admin_bar() {
     return false;
 }
 
 // Remove 'text/css' from our enqueued stylesheet
-function html5_style_remove($tag)
-{
+function transport_style_remove($tag) {
     return preg_replace('~\s+type=["\'][^"\']++["\']~', '', $tag);
 }
 
 // Remove thumbnail width and height dimensions that prevent fluid images in the_thumbnail
-function remove_thumbnail_dimensions( $html )
-{
+function remove_thumbnail_dimensions( $html ) {
     $html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
     return $html;
 }
 
 // Custom Gravatar in Settings > Discussion
-function transportgravatar ($avatar_defaults)
-{
-    $myavatar = get_template_directory_uri() . '/img/gravatar.jpg';
+function transportgravatar ($avatar_defaults) {
+    $myavatar = get_template_directory_uri() . '/assets/img/gravatar.jpg';
     $avatar_defaults[$myavatar] = "Custom Gravatar";
     return $avatar_defaults;
 }
 
 // Threaded Comments
-function enable_threaded_comments()
-{
+function enable_threaded_comments() {
     if (!is_admin()) {
         if (is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
             wp_enqueue_script('comment-reply');
@@ -292,8 +269,7 @@ function enable_threaded_comments()
 }
 
 // Custom Comments Callback
-function transportcomments($comment, $args, $depth)
-{
+function transportcomments($comment, $args, $depth) {
 	$GLOBALS['comment'] = $comment;
 	extract($args, EXTR_SKIP);
 
@@ -344,10 +320,9 @@ add_action('init', 'transport_header_scripts'); // Add Custom Scripts to wp_head
 add_action('wp_print_scripts', 'transport_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'transport_styles'); // Add Theme Stylesheet
-add_action('init', 'register_html5_menu'); // Add Transport Theme Menu
-add_action('init', 'create_post_type_html5'); // Add our Transport Theme Custom Post Type
+add_action('init', 'register_transport_menu'); // Add Transport Theme Menu
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
-add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
+add_action('init', 'transport_pagination'); // Add our HTML5 Pagination
 
 // Remove Actions
 remove_action('wp_head', 'feed_links_extra', 3); // Display the links to the extra feeds such as category feeds
@@ -375,78 +350,140 @@ add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <di
 add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
-add_filter('excerpt_more', 'html5_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts
+add_filter('excerpt_more', 'transport_view_article'); // Add 'View Article' button instead of [...] for Excerpts
 add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
-add_filter('style_loader_tag', 'html5_style_remove'); // Remove 'text/css' from enqueued stylesheet
+add_filter('style_loader_tag', 'transport_style_remove'); // Remove 'text/css' from enqueued stylesheet
 add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
 add_filter('image_send_to_editor', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to post images
 
 // Remove Filters
 remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
 
-// Shortcodes
-add_shortcode('html5_shortcode_demo', 'html5_shortcode_demo'); // You can place [html5_shortcode_demo] in Pages, Posts now.
-add_shortcode('html5_shortcode_demo_2', 'html5_shortcode_demo_2'); // Place [html5_shortcode_demo_2] in Pages, Posts now.
-
-// Shortcodes above would be nested like this -
-// [html5_shortcode_demo] [html5_shortcode_demo_2] Here's the page title! [/html5_shortcode_demo_2] [/html5_shortcode_demo]
-
 /*------------------------------------*\
-	Custom Post Types
+    Slider
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called HTML5-Blank
-function create_post_type_html5()
-{
-    register_taxonomy_for_object_type('category', 'html5-blank'); // Register Taxonomies for Category
-    register_taxonomy_for_object_type('post_tag', 'html5-blank');
-    register_post_type('html5-blank', // Register Custom Post Type
-        array(
-        'labels' => array(
-            'name' => __('Transport Theme Custom Post', 'transport'), // Rename these to suit
-            'singular_name' => __('Transport Theme Custom Post', 'transport'),
-            'add_new' => __('Add New', 'transport'),
-            'add_new_item' => __('Add New Transport Theme Custom Post', 'transport'),
-            'edit' => __('Edit', 'transport'),
-            'edit_item' => __('Edit Transport Theme Custom Post', 'transport'),
-            'new_item' => __('New Transport Theme Custom Post', 'transport'),
-            'view' => __('View Transport Theme Custom Post', 'transport'),
-            'view_item' => __('View Transport Theme Custom Post', 'transport'),
-            'search_items' => __('Search Transport Theme Custom Post', 'transport'),
-            'not_found' => __('No Transport Theme Custom Posts found', 'transport'),
-            'not_found_in_trash' => __('No Transport Theme Custom Posts found in Trash', 'transport')
-        ),
-        'public' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
-        'supports' => array(
-            'title',
-            'editor',
-            'excerpt',
-            'thumbnail'
-        ), // Go to Dashboard Custom Transport Theme post for supports
-        'can_export' => true, // Allows export in Tools > Export
-        'taxonomies' => array(
-            'post_tag',
-            'category'
-        ) // Add Category and Post Tags support
-    ));
-}
+function transport_register_custom_posts() {    
+    $args = array(    
+        'label' => __('Слайдер', 'transport'),    
+        'singular_label' => __('Слайдер', 'transport'),    
+        'public' => true,    
+        'show_ui' => true,    
+        'capability_type' => 'post',    
+        'hierarchical' => false,    
+        'rewrite' => true,
+        'menu_icon' => 'dashicons-images-alt',
+        'supports' => array('title', 'editor', 'thumbnail')
+    );    
+    register_post_type( 'transport_slider' , $args );  
 
-/*------------------------------------*\
-	ShortCode Functions
-\*------------------------------------*/
+    $args = array(    
+        'label' => __('Слайдер Компаний', 'transport'),    
+        'singular_label' => __('Слайдер Компаний', 'transport'),    
+        'public' => true,    
+        'show_ui' => true,    
+        'capability_type' => 'post',    
+        'hierarchical' => false,    
+        'rewrite' => true,
+        'menu_icon' => 'dashicons-images-alt2',
+        'supports' => array('title', 'thumbnail')
+    );    
+    register_post_type( 'tr_companies_slider' , $args );    
 
-// Shortcode Demo with Nested Capability
-function html5_shortcode_demo($atts, $content = null)
-{
-    return '<div class="shortcode-demo">' . do_shortcode($content) . '</div>'; // do_shortcode allows for nested Shortcodes
-}
+} 
+add_action('init', 'transport_register_custom_posts');    
 
-// Shortcode Demo with simple <h2> tag
-function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 shortcode, allows for nesting within above element. Fully expandable.
-{
-    return '<h2>' . $content . '</h2>';
+function change_post_meta() {
+    remove_meta_box( 'postimagediv', 'transport_slider', 'side' );
+    add_meta_box( 'postimagediv', 'Изображение', 'post_thumbnail_meta_box', 'transport_slider', 'normal', 'high' );
+    remove_meta_box( 'postimagediv', 'tr_companies_slider', 'side' );
+    add_meta_box( 'postimagediv', 'Изображение', 'post_thumbnail_meta_box', 'tr_companies_slider', 'normal', 'high' );
 }
+add_action( 'do_meta_boxes', 'change_post_meta' );
+
+function add_slider_images() {
+    
+    $args = array(
+        'post_type' => 'transport_slider',
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC'
+    );
+    $output .= '<div class="transport-slider-wrap"><div class="transport-slider">';
+    $slides = get_posts($args);
+    if($slides):
+        foreach($slides as $slide): 
+            $slide_meta = get_post_meta($slide->ID);
+            $attachment = get_the_post_thumbnail($slide->ID, 'slider-image');
+            $attachment_id = get_post_thumbnail_id( $slide->ID );
+            $slider_image = wp_get_attachment_image_src($attachment_id, 'slider-image');
+            $output .= '<div>';
+            if ($attachment_id) {
+                $output .= '<div class="slide-img" style="background-image:url('.$slider_image[0].');">';
+                $output .= '</div>';
+            }
+            if($slide->post_title || $slide->post_content) {
+                $output .= '<div class="slide-text">';
+            }
+            if($slide->post_title) {
+                $output .= '<div class="slider-title">';
+                $output .= $slide->post_title;
+                $output .= '</div>';
+            }
+            if($slide->post_content) {
+                // $output .= '<div class="slider-description-wrap">';
+                if($slide_meta['slider-button-url'][0]) {
+                    $output .= '<div class="slider-description with-btn">';
+                    $output .= apply_filters('the_content', $slide->post_content);
+                    $output .= '<a href="' . $slide_meta['slider-button-url'][0] . '" class="btn transparent-btn">' . $slide_meta['slider-button-text'][0] . '</a>';
+                    $output .= '</div>';
+                } else {
+                    $output .= '<div class="slider-description">';
+                    $output .= apply_filters('the_content', $slide->post_content);
+                    $output .= '</div>';
+                }
+                // $output .= '</div>';
+            }
+            if($slide->post_title || $slide->post_content) {
+                $output .= '</div>';
+            }
+            $output .= '</div>';
+        endforeach;
+    endif;
+    $output .= '</div></div>';
+    return $output; 
+}
+add_shortcode('transport_slider', 'add_slider_images');
+
+
+function add_companies_slider() {
+    
+    $args = array(
+        'post_type' => 'tr_companies_slider',
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC'
+    );
+    $output .= '<div class="transport-companies-slider-wrap"><div class="transport-companies-slider">';
+    $slides = get_posts($args);
+    if($slides):
+        foreach($slides as $slide): 
+            $slide_meta = get_post_meta($slide->ID);
+            $attachment = get_the_post_thumbnail($slide->ID, 'slider-image');
+            $attachment_id = get_post_thumbnail_id( $slide->ID );
+            $slider_image = wp_get_attachment_image_src($attachment_id, 'slider-image');
+            $output .= '<div>';
+            if ($attachment_id) {
+                $output .= '<div class="slide-img">';
+                $output .= '<img src="'.$slider_image[0].'"/>';
+                $output .= '</div>';
+            }
+            $output .= '</div>';
+        endforeach;
+    endif;
+    $output .= '</div></div>';
+    return $output; 
+}
+add_shortcode('transport_companies_slider', 'add_companies_slider');
 
 ?>
