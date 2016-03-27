@@ -28,25 +28,6 @@
 		<!-- wrapper -->
 		<div class="wrapper">
 
-			<div class="top-bar">
-				<div class="row">
-					<ul class="top-bar-right">
-						<?php if($transport['header-phone']):?>
-					        <li>
-						        <span class="dashicons dashicons-phone"></span>
-						        <?php echo $transport['header-phone']; ?>
-						    </li>
-						<?php endif; ?>
-						<?php if($transport['header-email']):?>
-							<li>
-					        	<span class="dashicons dashicons-email-alt"></span>
-					        	<a href="mailto:<?php echo $transport['header-email']; ?>"><?php echo $transport['header-email']; ?></a>        
-					       	</li>
-						<?php endif; ?>
-				    </ul>
-				</div>
-			</div>
-
 			<!-- header -->
 			<header class="header" role="banner">
 				<div class="nav-wrap">
@@ -56,14 +37,27 @@
 						<div class="logo">
 							<a href="<?php echo home_url(); ?>">
 								<!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
-								<img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.svg" alt="Logo" class="logo-img">
+								<?php if($transport['site-logo']['url']):?>
+									<img src="<?php echo $transport['site-logo']['url']; ?>" alt="Logo" class="logo-img">
+								<?php else: ?>
+									<img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.svg" alt="Logo" class="logo-img">
+								<?php endif; ?>
 							</a>
 						</div>
 						<!-- /logo -->
-
+					</div>
+					<div class="row">
 						<!-- nav -->
-						<nav class="float-right nav" role="navigation">
+						<nav class="float-center nav" role="navigation">
 							<?php transport_nav(); ?>
+							<div class="search-wrap">
+								<form class="search" method="get" action="<?php echo home_url(); ?>" role="search">
+									<input class="search-input" type="search" name="s" placeholder="<?php _e( 'Введите ключевые слова для поиска', 'transport' ); ?>">
+									<button class="search-submit" type="submit" role="button">
+										<span class="dashicons dashicons-search"></span>
+									</button>
+								</form>
+							</div>
 						</nav>
 						<!-- /nav -->
 					</div>

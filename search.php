@@ -2,9 +2,13 @@
 
 	<main role="main">
 		<!-- section -->
-		<section>
+		<section class="section">
+			<div class="page-heading" <?php if($transport['page-title-bg-image']['url']):?>style="background-image: url(<?php echo $transport['page-title-bg-image']['url'];?>)"<?php endif; ?>>
+				<div class="row">
+					<h1><?php echo sprintf( __( 'Результаты поиска для %s', 'transport' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
+				</div>
+			</div>
 
-			<h1><?php echo sprintf( __( '%s Search Results for ', 'transport' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
 
 			<?php get_template_part('loop'); ?>
 
@@ -13,7 +17,5 @@
 		</section>
 		<!-- /section -->
 	</main>
-
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

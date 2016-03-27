@@ -1,6 +1,6 @@
 <?php 
 /*
-* Template Name: Home Page
+* Template Name: Главная страница
 */
 
 get_header(); 
@@ -22,9 +22,13 @@ global $transport;
 					<div class="row">
 						<h3 class="small-12 columns section-title"><?php _e('Направления Работы'); ?></h3>
 						<div class="small-12 medium-6 columns img-block">
-							<?php if($transport['home-left-block-image']['url']):?>
+							<?php if($transport['home-left-block-image']['url']): ?>
+								<?php 
+								$attachmentId = get_attachment_id_from_src($transport['home-left-block-image']['url']);
+								$src = wp_get_attachment_image_src($attachmentId, 'large');
+								?>
 								<div class="img-mask"></div>
-								<div class="img" style="background-image: url(<?php echo $transport['home-left-block-image']['url']; ?>);" class="work-way-img"></div>
+								<div class="img" style="background-image: url(<?php echo $src[0]; ?>);" class="work-way-img"></div>
 							<?php endif;?>
 							<?php if($transport['home-left-block-title']): ?>
 								<div class="img-block-text">
@@ -39,8 +43,12 @@ global $transport;
 						</div>
 						<div class="small-12 medium-6 columns img-block">
 							<?php if($transport['home-right-block-image']['url']):?>
+								<?php 
+								$attachmentId = get_attachment_id_from_src($transport['home-left-block-image']['url']);
+								$src = wp_get_attachment_image_src($attachmentId, 'large');
+								?>
 								<div class="img-mask"></div>
-								<div class="img" style="background-image: url(<?php echo $transport['home-right-block-image']['url']; ?>);" class="work-way-img"></div>
+								<div class="img" style="background-image: url(<?php echo $src[0]; ?>);" class="work-way-img"></div>
 								
 							<?php endif;?>
 							<?php if($transport['home-right-block-title']): ?>

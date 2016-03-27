@@ -74,20 +74,13 @@
             }
 
             public function setSections() {
-                
-                $header = array(
-                    array(
-                        'id'        => 'header-phone',
-                        'type'      => 'text',
-                        'title'     => __('Номер телефона', 'transport')
-                    ),
-                    array(
-                        'id'        => 'header-email',
-                        'type'      => 'text',
-                        'title'     => __('E-Mail', 'transport')
+                $settings = array(array(
+                        'id'        => 'site-logo',
+                        'type'      => 'media',
+                        'title'     => __('Логотип Сайта', 'transport')
                     ),
                 );
-
+                
                 $footer = array(
                     array(
                         'id'        => 'footer-testing-url',
@@ -149,13 +142,12 @@
 
 
                 /* Set sections */
-
                 $this->sections[] = array(
-                    'title'  => __( 'Header', 'transport' ),
+                    'title'  => __( 'Settings', 'transport' ),
                     'icon'   => 'el-icon-chevron-right',
-                    'fields' => $header
+                    'fields' => $settings
                 );
-
+                
                 $this->sections[] = array(
                     'title'  => __( 'Footer', 'transport' ),
                     'icon'   => 'el-icon-chevron-right',

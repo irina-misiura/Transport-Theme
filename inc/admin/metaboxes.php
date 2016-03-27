@@ -4,17 +4,6 @@ if ( !function_exists( "redux_add_metaboxes" ) ):
 
 		$homepage_options = array();
 
- 		// $homepage_options[] = array(
-			// 'icon' 		=> 'el-icon-th-large',
-			// 'title'		=> __('Main Image', 'transport'),
-			// 'fields' 	=> array(
-			// 	array(
-	  //               'id'		=> 'home-large-image',
-	  //               'type'		=> 'media',
-	  //           ),
-	  //       )
-	  //   );
-
 	    $homepage_options[] = array(
 			'icon' 		=> 'el-icon-th-large',
 			'title'		=> __('Направления Работы', 'transport'),
@@ -127,32 +116,129 @@ if ( !function_exists( "redux_add_metaboxes" ) ):
             )
 		);
 
-	  //   $homepage_options[] = array(
-			// 'icon' 		=> 'el-icon-th-large',
-			// 'title'		=> __('Наши достижения', 'transport'),
-			// 'fields' 	=> array(
-   // 				array(
-	  //               'id'		=> 'home-right-title1',
-	  //               'type'		=> 'text',
-	  //               'title'		=> __( 'Title Line One', 'transport' ),
-	  //           ),
-			// 	array(
-	  //               'id'		=> 'home-right-title2',
-	  //               'type'		=> 'text',
-	  //               'title'		=> __( 'Title Line Two', 'transport' ),
-	  //           ),
-			// 	array(
-	  //               'id'		=> 'home-right-text',
-	  //               'type'		=> 'editor',
-	  //               'title'		=> __( 'Text', 'transport' ),
-	  //           ),
-			// 	array(
-	  //               'id'		=> 'home-right-login',
-	  //               'type'		=> 'text',
-	  //               'title'		=> __( 'Log In Link', 'transport' ),
-	  //           ),
-	  //       )
-	  //   );
+	    $equipment_options = array();
+
+		$equipment_options[] = array(
+			'icon'		=> 'el-icon-th-large',
+			'fields'	=> array(
+				array(
+	                'id'		=> 'equipment-circle-block1-text',
+	                'type'		=> 'text',
+	                'title'		=> __( 'Текст блока 1', 'transport' ),
+	            ),
+	            array(
+	                'id'		=> 'equipment-circle-block1-url',
+	                'type'		=> 'text',
+	                'title'		=> __( 'URL блока 1', 'transport' ),
+	            ),
+				array(
+	                'id'		=> 'equipment-circle-block2-text',
+	                'type'		=> 'text',
+	                'title'		=> __( 'Текст блока 2', 'transport' ),
+	            ),
+	            array(
+	                'id'		=> 'equipment-circle-block2-url',
+	                'type'		=> 'text',
+	                'title'		=> __( 'URL блока 2', 'transport' ),
+	            ),
+				array(
+	                'id'		=> 'equipment-circle-block3-text',
+	                'type'		=> 'text',
+	                'title'		=> __( 'Текст блока 3', 'transport' ),
+	            ),
+	            array(
+	                'id'		=> 'equipment-circle-block3-url',
+	                'type'		=> 'text',
+	                'title'		=> __( 'URL блока 3', 'transport' ),
+	            ),
+				array(
+	                'id'		=> 'equipment-circle-block4-text',
+	                'type'		=> 'text',
+	                'title'		=> __( 'Текст блока 4', 'transport' ),
+	            ),
+	            array(
+	                'id'		=> 'equipment-circle-block4-url',
+	                'type'		=> 'text',
+	                'title'		=> __( 'URL блока 4', 'transport' ),
+	            ),
+				array(
+	                'id'		=> 'equipment-circle-block5-text',
+	                'type'		=> 'text',
+	                'title'		=> __( 'Текст блока 5', 'transport' ),
+	            ),
+	            array(
+	                'id'		=> 'equipment-circle-block5-url',
+	                'type'		=> 'text',
+	                'title'		=> __( 'URL блока 5', 'transport' ),
+	            ),
+            )
+		);
+		
+		$autotrackers_options = array();
+		
+	    $autotrackers_options[] = array(
+			'icon' 		=> 'el-icon-th-large',
+			'title'		=> __('Опции Автотрекеров', 'transport'),
+			'fields' 	=> array(
+				array(
+	                'id'		=> 'auto-tracker-product-category',
+	                'type'		=> 'select',
+	                'data'		=> 'terms',
+	                'args'		=> array(
+	                	'taxonomies'	=> 'tr_product_category',
+	                	'hide_empty'	=> false
+	                ),
+	                'title'		=> __( 'Категория Продуктов', 'transport' ),
+	            ),
+	        )
+	    );
+
+	    $product_options = array();
+
+	    $product_options[] =  array(
+			'icon' 		=> 'el-icon-th-large',
+			'title'		=> __('Возможности', 'transport'),
+			'fields' 	=> array(
+				array(
+	                'id'		=> 'product-capabilities',
+	                'type'		=> 'multi_text'
+	            ),
+	        )
+	    );
+
+	    $product_options[] =  array(
+			'icon' 		=> 'el-icon-th-large',
+			'title'		=> __('Характеристики', 'transport'),
+			'fields' 	=> array(
+				array(
+	                'id'		=> 'product-characteristics-names',
+	                'type'		=> 'multi_text',
+	                'title'		=> __( 'Названия полей таблицы', 'transport' ),
+	            ),
+				array(
+	                'id'		=> 'product-characteristics-values',
+	                'type'		=> 'multi_text',
+	                'title'		=> __( 'Значения полей таблицы', 'transport' ),
+	            ),
+	        )
+	    );
+
+	    $product_options[] =  array(
+			'icon' 		=> 'el-icon-th-large',
+			'title'		=> __('Загрузки', 'transport'),
+			'fields' 	=> array(
+				array(
+	                'id'		=> 'product-downloads-url',
+	                'type'		=> 'multi_text',
+	                'title'		=> __( 'URL Загрузок', 'transport' ),
+	            ),
+				array(
+	                'id'		=> 'product-downloads-names',
+	                'type'		=> 'multi_text',
+	                'title'		=> __( 'Названия Загрузок', 'transport' ),
+	            ),
+	        )
+	    );
 
 	  //   $homepage_options[] = array(
 			// 'icon' 		=> 'el-icon-th-large',
@@ -501,6 +587,35 @@ if ( !function_exists( "redux_add_metaboxes" ) ):
 	        'position'		=> 'normal',
 	        'priority'		=> 'high',
 	        'sections'		=> $slider_options
+	    );
+
+	    $metaboxes[] = array(
+	        'id'			=> 'equipment-options',
+	        'title'			=> __('Опции страницы оборудования', 'transport'),
+	        'post_types'	=> array('page'),
+	        'page_template'	=> array('templates/page-equipment.php'),
+	        'position'		=> 'normal',
+	        'priority'		=> 'high',
+	        'sections'		=> $equipment_options
+	    );
+
+	    $metaboxes[] = array(
+	        'id'			=> 'autotrackers-options',
+	        'title'			=> __('Опции страницы Автотрекеров', 'transport'),
+	        'post_types'	=> array('page'),
+	        'page_template'	=> array('templates/page-auto-trackers.php'),
+	        'position'		=> 'normal',
+	        'priority'		=> 'high',
+	        'sections'		=> $autotrackers_options
+	    );
+
+	    $metaboxes[] = array(
+	        'id'			=> 'product-options',
+	        'title'			=> __('Опции Продуктов', 'transport'),
+	        'post_types'	=> array('tr_product'),
+	        'position'		=> 'normal',
+	        'priority'		=> 'high',
+	        'sections'		=> $product_options
 	    );
 
 	    // $metaboxes[] = array(

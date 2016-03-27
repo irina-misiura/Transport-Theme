@@ -68,6 +68,9 @@ function transport_header_scripts() {
         wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
         wp_enqueue_script('modernizr'); // Enqueue it!
 
+        wp_register_script('foundation', get_template_directory_uri() . '/assets/js/lib/foundation.min.js', array('jquery')); // Modernizr
+        wp_enqueue_script('foundation'); 
+
         wp_register_script('slick', get_template_directory_uri() . '/assets/slick/slick.min.js', array('jquery')); // Modernizr
         wp_enqueue_script('slick'); // Enqueue it!
 
@@ -92,6 +95,9 @@ function transport_styles() {
     wp_register_style('foundation', get_template_directory_uri() . '/assets/css/foundation.min.css');
     wp_enqueue_style('foundation'); 
 
+    wp_register_style('foundation-flex', get_template_directory_uri() . '/assets/css/foundation-flex.css');
+    wp_enqueue_style('foundation-flex'); 
+
     wp_enqueue_style('dashicons'); 
 
     wp_register_style('slick', get_template_directory_uri() . '/assets/slick/slick.css');
@@ -100,6 +106,12 @@ function transport_styles() {
     wp_register_style('transport', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
     wp_enqueue_style('transport'); // Enqueue it!
 }
+
+function custom_upload_mimes ( $existing_mimes=array() ) {
+    $existing_mimes['svg'] = 'image/svg+xml';
+    return $existing_mimes;
+}
+add_filter('upload_mimes', 'custom_upload_mimes');
 
 // Register Transport Theme Navigation
 function register_transport_menu() {
@@ -181,6 +193,42 @@ if (function_exists('register_sidebar')) {
         'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>'
     ));
+    
+    register_sidebar(array(
+        'name' => __('Right Sidebar', 'transport'),
+        'id' => 'right-sidebar',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>'
+    ));
+    
+    register_sidebar(array(
+        'name' => __('Equipment Sidebar', 'transport'),
+        'id' => 'equipment-sidebar',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>'
+    ));
+    
+    register_sidebar(array(
+        'name' => __('Trackers Sidebar', 'transport'),
+        'id' => 'trackers-sidebar',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>'
+    ));
+
+    register_sidebar(array(
+        'name' => __('Product Sidebar', 'transport'),
+        'id' => 'product-sidebar',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>'
+    ));
 }
 
 // Remove wp_head() injected Recent Comment styles
@@ -239,6 +287,14 @@ function transport_view_article($more) {
 // Remove Admin bar
 function remove_admin_bar() {
     return false;
+}
+
+function get_attachment_id_from_src ($image_src) {
+    global $wpdb;
+    $query = "SELECT ID FROM {$wpdb->posts} WHERE guid='$image_src'";
+    $id = $wpdb->get_var($query);
+    return $id;
+
 }
 
 // Remove 'text/css' from our enqueued stylesheet
@@ -316,10 +372,10 @@ function transportcomments($comment, $args, $depth) {
 \*------------------------------------*/
 
 // Add Actions
-add_action('init', 'transport_header_scripts'); // Add Custom Scripts to wp_head
+add_action('wp_enqueue_scripts', 'transport_styles'); // Add Theme Stylesheet
+add_action('wp_enqueue_scripts', 'transport_header_scripts'); // Add Custom Scripts to wp_head
 add_action('wp_print_scripts', 'transport_conditional_scripts'); // Add Conditional Page Scripts
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
-add_action('wp_enqueue_scripts', 'transport_styles'); // Add Theme Stylesheet
 add_action('init', 'register_transport_menu'); // Add Transport Theme Menu
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'transport_pagination'); // Add our HTML5 Pagination
@@ -351,7 +407,7 @@ add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove 
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
 add_filter('excerpt_more', 'transport_view_article'); // Add 'View Article' button instead of [...] for Excerpts
-add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
+// add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
 add_filter('style_loader_tag', 'transport_style_remove'); // Remove 'text/css' from enqueued stylesheet
 add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
 add_filter('image_send_to_editor', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to post images
@@ -364,6 +420,56 @@ remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altoget
 \*------------------------------------*/
 
 function transport_register_custom_posts() {    
+    $labels = array(
+        'name'              => _x( 'Категории Продуктов', 'taxonomy general name' ),
+        'singular_name'     => _x( 'Категория Продуктов', 'taxonomy singular name' ),
+        'search_items'      => __( 'Искать Категорию Продуктов' ),
+        'all_items'         => __( 'Все Категории Продуктов' ),
+        'parent_item'       => __( 'Родительская Категория Продуктов' ),
+        'parent_item_colon' => __( 'Родительская Категория Продуктов:' ),
+        'edit_item'         => __( 'Редактировать Категорию Продуктов' ),
+        'update_item'       => __( 'Обновить Категорию Продуктов' ),
+        'add_new_item'      => __( 'Добавить Новую Категорию Продуктов' ),
+        'new_item_name'     => __( 'Название Новой Категории Продуктов' ),
+        'menu_name'         => __( 'Категория Продуктов' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'product_category' ),
+    );
+
+    register_taxonomy( 'tr_product_category', array( 'tr_product' ), $args ); 
+    
+    $labels = array(
+        'name'              => _x( 'Подкатегории Продуктов', 'taxonomy general name' ),
+        'singular_name'     => _x( 'Подкатегория Продуктов', 'taxonomy singular name' ),
+        'search_items'      => __( 'Искать Подкатегорию Продуктов' ),
+        'all_items'         => __( 'Все Подкатегории Продуктов' ),
+        'parent_item'       => __( 'Родительская Подкатегория Продуктов' ),
+        'parent_item_colon' => __( 'Родительская Подкатегория Продуктов:' ),
+        'edit_item'         => __( 'Редактировать Подкатегорию Продуктов' ),
+        'update_item'       => __( 'Обновить Подкатегорию Продуктов' ),
+        'add_new_item'      => __( 'Добавить Новую Подкатегорию Продуктов' ),
+        'new_item_name'     => __( 'Название Новой Подкатегории Продуктов' ),
+        'menu_name'         => __( 'Подкатегория Продуктов' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'product_subcategory' ),
+    );
+
+    register_taxonomy( 'tr_product_subcategory', array( 'tr_product' ), $args );
+
     $args = array(    
         'label' => __('Слайдер', 'transport'),    
         'singular_label' => __('Слайдер', 'transport'),    
@@ -388,10 +494,25 @@ function transport_register_custom_posts() {
         'menu_icon' => 'dashicons-images-alt2',
         'supports' => array('title', 'thumbnail')
     );    
-    register_post_type( 'tr_companies_slider' , $args );    
+    register_post_type( 'tr_companies_slider' , $args );  
+
+    $args = array(    
+        'label' => __('Продукты', 'transport'),    
+        'singular_label' => __('Продукт', 'transport'),    
+        'public' => true,    
+        'show_ui' => true,    
+        'capability_type' => 'post',    
+        'hierarchical' => false,    
+        'rewrite' => array('slug' => 'product'),
+        'menu_icon' => 'dashicons-feedback',
+        'supports' => array('title', 'editor', 'thumbnail'),
+        'taxonomies' => array('tr_product_category', 'tr_product_subcategory')
+    );    
+    register_post_type( 'tr_product' , $args );    
 
 } 
-add_action('init', 'transport_register_custom_posts');    
+add_action('init', 'transport_register_custom_posts');  
+add_action('admin_init', 'transport_register_custom_posts');    
 
 function change_post_meta() {
     remove_meta_box( 'postimagediv', 'transport_slider', 'side' );
@@ -426,9 +547,9 @@ function add_slider_images() {
                 $output .= '<div class="slide-text">';
             }
             if($slide->post_title) {
-                $output .= '<div class="slider-title">';
+                $output .= '<h3 class="slider-title">';
                 $output .= $slide->post_title;
-                $output .= '</div>';
+                $output .= '</h3>';
             }
             if($slide->post_content) {
                 // $output .= '<div class="slider-description-wrap">';
