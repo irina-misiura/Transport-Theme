@@ -10,14 +10,18 @@
 				</div>
 			</div>
 
-			<?php get_template_part('loop'); ?>
-
+			<div class="row">
+				<div class="small-12 medium-9 columns">
+					<?php get_template_part('loop'); ?>
+				</div>
+				<div class="small-12 medium-3 columns">
+					<?php get_sidebar(); ?>				
+				</div>
+			</div>
 			<?php get_template_part('pagination'); ?>
 
 		</section>
 		<!-- /section -->
 	</main>
-
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

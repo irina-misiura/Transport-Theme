@@ -5,6 +5,7 @@
 
 
 get_header(); 
+
 global $transport;
 ?>
 
@@ -19,9 +20,20 @@ global $transport;
 			<div class="row">
 				<div class="small-12 medium-3 columns">
 					<div class="left-sidebar equipment-sidebar">
-						<?php if(function_exists('dynamic_sidebar') && is_active_sidebar('equipment-sidebar')):?>
+						<?php /*if(function_exists('dynamic_sidebar') && is_active_sidebar('equipment-sidebar')):?>
 							<?php dynamic_sidebar('equipment-sidebar');?>
-						<?php endif;?>
+						<?php endif;*/?>
+
+						<?php
+						
+						$terms = get_terms('tr_product_category', array('hide_empty' => false));
+						if ( $terms ): ?>
+							<ul class="menu">
+  								<?php foreach ( $terms  as $term ):?>
+    								<li class="menu-item"><a href="<?php echo get_term_link($term);?>"><?php echo $term->name; ?></a></li>
+  								<?php endforeach; ?>
+  							</ul>
+						<?php endif; ?>
 					</div>
 				</div>
 				<div class="small-12 medium-9 columns">
@@ -34,32 +46,50 @@ global $transport;
 
 					</div>
 					<?php $countCircles = 0; 
-						if($transport['equipment-circle-block1-text']):
-							$countCircles++;
-						endif;
-						if($transport['equipment-circle-block2-text']):
-							$countCircles++;
-						endif;
-						if($transport['equipment-circle-block3-text']):
-							$countCircles++;
-						endif;
-						if($transport['equipment-circle-block4-text']):
-							$countCircles++;
-						endif;
-						if($transport['equipment-circle-block5-text']):
-							$countCircles++;
-						endif;
+						// if($transport['equipment-circle-block1-text']):
+						// 	$countCircles++;
+						// endif;
+						// if($transport['equipment-circle-block2-text']):
+						// 	$countCircles++;
+						// endif;
+						// if($transport['equipment-circle-block3-text']):
+						// 	$countCircles++;
+						// endif;
+						// if($transport['equipment-circle-block4-text']):
+						// 	$countCircles++;
+						// endif;
+						// if($transport['equipment-circle-block5-text']):
+						// 	$countCircles++;
+						// endif;
+
+						$countCircles = count($terms);
 						$heightCircles = 0;
-						if($countCircles<3):
+						if($countCircles < 3):
 							$heightCircles = 250;
 						elseif($countCircles == 3):
 							$heightCircles = 450;
 						elseif($countCircles > 3):
 							$heightCircles = 650;
 						endif;
-					?>
-					<div class="clear circles-block" style="height:<?php echo $heightCircles; ?>px;">
-						<?php if($transport['equipment-circle-block1-text']): ?>
+						$i = 1;
+						$j = 0;
+
+						foreach($terms as $term): ?>
+							<?php if($j%3 == 0 || $i%3 == 0): ?>
+								<div class="row medium-unstack align-middle clear circles-block">
+							<?php endif; ?>
+								<div class="columns "><a href="<?php echo get_term_link($term);?>" class="circle">
+									<div class="circle-text"><?php echo $term->name; ?></div>
+								</a></div>
+							<?php if($j%3 == 1 || $i%3==0): ?>
+								</div>
+							<?php 
+							endif;
+							$i++;
+							$j++;
+							?>
+						<?php endforeach;?>
+						<?php/* if($transport['equipment-circle-block1-text']): ?>
 							<a <?php if($transport['equipment-circle-block1-url']): echo 'href="'.$transport['equipment-circle-block1-url'].'"'; endif; ?>class="circle">
 								<div class="circle-text"><?php echo $transport['equipment-circle-block1-text']; ?></div>
 							</a>
@@ -83,8 +113,8 @@ global $transport;
 							<a <?php if($transport['equipment-circle-block5-url']): echo 'href="'.$transport['equipment-circle-block5-url'].'"'; endif; ?>class="circle">
 								<div class="circle-text"><?php echo $transport['equipment-circle-block5-text']; ?></div>
 							</a>
-						<?php endif; ?>
-					</div>
+						<?php endif; */?>
+					<!-- </div> -->
 				</div>
 			</div>
 			

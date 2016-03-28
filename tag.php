@@ -2,18 +2,26 @@
 
 	<main role="main">
 		<!-- section -->
-		<section>
+		<section class="section">
 
-			<h1><?php _e( 'Tag Archive: ', 'transport' ); echo single_tag_title('', false); ?></h1>
+			<div class="page-heading" <?php if($transport['page-title-bg-image']['url']):?>style="background-image: url(<?php echo $transport['page-title-bg-image']['url'];?>)"<?php endif; ?>>
+				<div class="row">
+					<h1><?php _e( 'Тэги: ', 'transport' ); echo single_tag_title('', false); ?></h1>
+				</div>
+			</div>
 
-			<?php get_template_part('loop'); ?>
-
+			<div class="row">
+				<div class="small-12 medium-9 columns">
+					<?php get_template_part('loop'); ?>
+				</div>
+				<div class="small-12 medium-3 columns">
+					<?php get_sidebar(); ?>				
+				</div>
+			</div>
 			<?php get_template_part('pagination'); ?>
 
 		</section>
 		<!-- /section -->
 	</main>
-
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

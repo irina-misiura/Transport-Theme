@@ -116,63 +116,63 @@ if ( !function_exists( "redux_add_metaboxes" ) ):
             )
 		);
 
-	    $equipment_options = array();
+	 //    $equipment_options = array();
 
-		$equipment_options[] = array(
-			'icon'		=> 'el-icon-th-large',
-			'fields'	=> array(
-				array(
-	                'id'		=> 'equipment-circle-block1-text',
-	                'type'		=> 'text',
-	                'title'		=> __( 'Текст блока 1', 'transport' ),
-	            ),
-	            array(
-	                'id'		=> 'equipment-circle-block1-url',
-	                'type'		=> 'text',
-	                'title'		=> __( 'URL блока 1', 'transport' ),
-	            ),
-				array(
-	                'id'		=> 'equipment-circle-block2-text',
-	                'type'		=> 'text',
-	                'title'		=> __( 'Текст блока 2', 'transport' ),
-	            ),
-	            array(
-	                'id'		=> 'equipment-circle-block2-url',
-	                'type'		=> 'text',
-	                'title'		=> __( 'URL блока 2', 'transport' ),
-	            ),
-				array(
-	                'id'		=> 'equipment-circle-block3-text',
-	                'type'		=> 'text',
-	                'title'		=> __( 'Текст блока 3', 'transport' ),
-	            ),
-	            array(
-	                'id'		=> 'equipment-circle-block3-url',
-	                'type'		=> 'text',
-	                'title'		=> __( 'URL блока 3', 'transport' ),
-	            ),
-				array(
-	                'id'		=> 'equipment-circle-block4-text',
-	                'type'		=> 'text',
-	                'title'		=> __( 'Текст блока 4', 'transport' ),
-	            ),
-	            array(
-	                'id'		=> 'equipment-circle-block4-url',
-	                'type'		=> 'text',
-	                'title'		=> __( 'URL блока 4', 'transport' ),
-	            ),
-				array(
-	                'id'		=> 'equipment-circle-block5-text',
-	                'type'		=> 'text',
-	                'title'		=> __( 'Текст блока 5', 'transport' ),
-	            ),
-	            array(
-	                'id'		=> 'equipment-circle-block5-url',
-	                'type'		=> 'text',
-	                'title'		=> __( 'URL блока 5', 'transport' ),
-	            ),
-            )
-		);
+		// $equipment_options[] = array(
+		// 	'icon'		=> 'el-icon-th-large',
+		// 	'fields'	=> array(
+		// 		array(
+	 //                'id'		=> 'equipment-circle-block1-text',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'Текст блока 1', 'transport' ),
+	 //            ),
+	 //            array(
+	 //                'id'		=> 'equipment-circle-block1-url',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'URL блока 1', 'transport' ),
+	 //            ),
+		// 		array(
+	 //                'id'		=> 'equipment-circle-block2-text',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'Текст блока 2', 'transport' ),
+	 //            ),
+	 //            array(
+	 //                'id'		=> 'equipment-circle-block2-url',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'URL блока 2', 'transport' ),
+	 //            ),
+		// 		array(
+	 //                'id'		=> 'equipment-circle-block3-text',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'Текст блока 3', 'transport' ),
+	 //            ),
+	 //            array(
+	 //                'id'		=> 'equipment-circle-block3-url',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'URL блока 3', 'transport' ),
+	 //            ),
+		// 		array(
+	 //                'id'		=> 'equipment-circle-block4-text',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'Текст блока 4', 'transport' ),
+	 //            ),
+	 //            array(
+	 //                'id'		=> 'equipment-circle-block4-url',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'URL блока 4', 'transport' ),
+	 //            ),
+		// 		array(
+	 //                'id'		=> 'equipment-circle-block5-text',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'Текст блока 5', 'transport' ),
+	 //            ),
+	 //            array(
+	 //                'id'		=> 'equipment-circle-block5-url',
+	 //                'type'		=> 'text',
+	 //                'title'		=> __( 'URL блока 5', 'transport' ),
+	 //            ),
+  //           )
+		// );
 		
 		$autotrackers_options = array();
 		
@@ -589,25 +589,25 @@ if ( !function_exists( "redux_add_metaboxes" ) ):
 	        'sections'		=> $slider_options
 	    );
 
-	    $metaboxes[] = array(
-	        'id'			=> 'equipment-options',
-	        'title'			=> __('Опции страницы оборудования', 'transport'),
-	        'post_types'	=> array('page'),
-	        'page_template'	=> array('templates/page-equipment.php'),
-	        'position'		=> 'normal',
-	        'priority'		=> 'high',
-	        'sections'		=> $equipment_options
-	    );
+	    // $metaboxes[] = array(
+	    //     'id'			=> 'equipment-options',
+	    //     'title'			=> __('Опции страницы оборудования', 'transport'),
+	    //     'post_types'	=> array('page'),
+	    //     'page_template'	=> array('templates/page-equipment.php'),
+	    //     'position'		=> 'normal',
+	    //     'priority'		=> 'high',
+	    //     'sections'		=> $equipment_options
+	    // );
 
-	    $metaboxes[] = array(
-	        'id'			=> 'autotrackers-options',
-	        'title'			=> __('Опции страницы Автотрекеров', 'transport'),
-	        'post_types'	=> array('page'),
-	        'page_template'	=> array('templates/page-auto-trackers.php'),
-	        'position'		=> 'normal',
-	        'priority'		=> 'high',
-	        'sections'		=> $autotrackers_options
-	    );
+	    // $metaboxes[] = array(
+	    //     'id'			=> 'autotrackers-options',
+	    //     'title'			=> __('Опции страницы Автотрекеров', 'transport'),
+	    //     'post_types'	=> array('page'),
+	    //     'page_template'	=> array('templates/page-auto-trackers.php'),
+	    //     'position'		=> 'normal',
+	    //     'priority'		=> 'high',
+	    //     'sections'		=> $autotrackers_options
+	    // );
 
 	    $metaboxes[] = array(
 	        'id'			=> 'product-options',

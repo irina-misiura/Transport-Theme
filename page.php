@@ -28,7 +28,7 @@ global $transport;
 				<!-- article -->
 				<article>
 
-					<h2><?php _e( 'Sorry, nothing to display.', 'transport' ); ?></h2>
+					<h2><?php _e( 'Извините, нет ничего для отображения.', 'transport' ); ?></h2>
 
 				</article>
 				<!-- /article -->

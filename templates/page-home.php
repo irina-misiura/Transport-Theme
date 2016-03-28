@@ -44,7 +44,7 @@ global $transport;
 						<div class="small-12 medium-6 columns img-block">
 							<?php if($transport['home-right-block-image']['url']):?>
 								<?php 
-								$attachmentId = get_attachment_id_from_src($transport['home-left-block-image']['url']);
+								$attachmentId = get_attachment_id_from_src($transport['home-right-block-image']['url']);
 								$src = wp_get_attachment_image_src($attachmentId, 'large');
 								?>
 								<div class="img-mask"></div>
@@ -143,13 +143,13 @@ global $transport;
 									<div class="row news-item">
 										<div class="small-12 medium-3 columns image">
 											<?php if(has_post_thumbnail()): ?>
-												<?php the_post_thumbnail('medium'); ?>
+												<?php the_post_thumbnail('blog-widget'); ?>
 											<?php endif; ?>
 										</div>
 										<div class="small-12 medium-9 columns post-data">
-											<div class="post-date"><?php the_time('j F Y'); ?></div>
-											<div class="post-title"><h4><?php the_title(); ?></h4></div>
-											<div class="post-text"><?php transport_excerpt('transport_index'); ?></div>
+											<?php/*<div class="post-date"><?php the_time('j F Y'); ?></div>*/?>
+											<div class="post-title"><h4><a href="<?php the_permalink();?>"><?php the_title(); ?></a></h4></div>
+											<div class="post-text"><?php transport_excerpt('transport_blog_widget'); ?></div>
 										</div>
 									</div>
 								<?php
@@ -177,13 +177,13 @@ global $transport;
 									<div class="row news-item">
 										<div class="small-12 medium-3 columns image">
 											<?php if(has_post_thumbnail()): ?>
-												<?php the_post_thumbnail('medium'); ?>
+												<?php the_post_thumbnail('blog-widget'); ?>
 											<?php endif; ?>
 										</div>
 										<div class="small-12 medium-9 columns post-data">
-											<div class="post-date"><?php the_time('j F Y'); ?></div>
-											<div class="post-title"><h4><?php the_title(); ?></h4></div>
-											<div class="post-text"><?php transport_excerpt('transport_index'); ?></div>
+											<?php/*<div class="post-date"><?php the_time('j F Y'); ?></div>*/?>
+											<div class="post-title"><h4><a href="<?php the_permalink();?>"><?php the_title(); ?></a></h4></div>
+											<div class="post-text"><?php transport_excerpt('transport_blog_widget'); ?></div>
 										</div>
 									</div>
 								<?php
@@ -207,7 +207,7 @@ global $transport;
 				<!-- article -->
 				<article>
 
-					<h2><?php _e( 'Sorry, nothing to display.', 'transport' ); ?></h2>
+					<h2><?php _e( 'Извините, нет ничего для отображения.', 'transport' ); ?></h2>
 
 				</article>
 				<!-- /article -->

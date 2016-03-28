@@ -25,7 +25,8 @@ if (function_exists('add_theme_support')) {
     add_image_size('large', 700, '', true); // Large Thumbnail
     add_image_size('medium', 250, '', true); // Medium Thumbnail
     add_image_size('small', 120, '', true); // Small Thumbnail
-    add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
+    add_image_size('blog-images', 1000, '', true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
+    add_image_size('blog-widget', 150, '', true);
 
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -63,19 +64,19 @@ function transport_header_scripts() {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
 
     	wp_register_script('conditionizr', get_template_directory_uri() . '/assets/js/lib/conditionizr-4.3.0.min.js', array(), '4.3.0'); // Conditionizr
-        wp_enqueue_script('conditionizr'); // Enqueue it!
+        wp_enqueue_script('conditionizr');
 
         wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
-        wp_enqueue_script('modernizr'); // Enqueue it!
+        wp_enqueue_script('modernizr');
 
         wp_register_script('foundation', get_template_directory_uri() . '/assets/js/lib/foundation.min.js', array('jquery')); // Modernizr
         wp_enqueue_script('foundation'); 
 
         wp_register_script('slick', get_template_directory_uri() . '/assets/slick/slick.min.js', array('jquery')); // Modernizr
-        wp_enqueue_script('slick'); // Enqueue it!
+        wp_enqueue_script('slick');
 
         wp_register_script('transportscripts', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
-        wp_enqueue_script('transportscripts'); // Enqueue it!
+        wp_enqueue_script('transportscripts');
     }
 }
 
@@ -83,20 +84,20 @@ function transport_header_scripts() {
 function transport_conditional_scripts() {
     if (is_page('pagenamehere')) {
         wp_register_script('scriptname', get_template_directory_uri() . '/assets/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
-        wp_enqueue_script('scriptname'); // Enqueue it!
+        wp_enqueue_script('scriptname');
     }
 }
 
 // Load Transport Theme styles
 function transport_styles() {
-    wp_register_style('normalize', get_template_directory_uri() . '/assets/normalize.css', array(), '1.0', 'all');
-    // wp_enqueue_style('normalize'); // Enqueue it!
+    wp_register_style('normalize', get_template_directory_uri() . '/assets/css/normalize.min.css', array(), '1.0', 'all');
+    wp_enqueue_style('normalize');
 
     wp_register_style('foundation', get_template_directory_uri() . '/assets/css/foundation.min.css');
     wp_enqueue_style('foundation'); 
 
-    wp_register_style('foundation-flex', get_template_directory_uri() . '/assets/css/foundation-flex.css');
-    wp_enqueue_style('foundation-flex'); 
+    // wp_register_style('foundation-flex', get_template_directory_uri() . '/assets/css/foundation-flex.css');
+    // wp_enqueue_style('foundation-flex'); 
 
     wp_enqueue_style('dashicons'); 
 
@@ -104,7 +105,7 @@ function transport_styles() {
     wp_enqueue_style('slick'); 
 
     wp_register_style('transport', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
-    wp_enqueue_style('transport'); // Enqueue it!
+    wp_enqueue_style('transport');
 }
 
 function custom_upload_mimes ( $existing_mimes=array() ) {
@@ -248,18 +249,21 @@ function transport_pagination() {
         'base' => str_replace($big, '%#%', get_pagenum_link($big)),
         'format' => '?paged=%#%',
         'current' => max(1, get_query_var('paged')),
-        'total' => $wp_query->max_num_pages
+        'total' => $wp_query->max_num_pages,
+        'type' => 'list',
+        'prev_text' => '<',
+        'next_text' => '>'
     ));
 }
 
 // Custom Excerpts
 function transport_index($length) {// Create 20 Word Callback for Index page Excerpts, call using transport_excerpt('transport_index');
-    return 20;
+    return 50;
 }
 
 // Create 40 Word Callback for Custom Post Excerpts, call using transport_excerpt('transport_custom_post');
-function transport_custom_post($length) {
-    return 40;
+function transport_blog_widget($length) {
+    return 20;
 }
 
 // Create the Custom Excerpts callback
@@ -281,7 +285,7 @@ function transport_excerpt($length_callback = '', $more_callback = '') {
 // Custom View Article link to Post
 function transport_view_article($more) {
     global $post;
-    return '... <a class="view-article" href="' . get_permalink($post->ID) . '">' . __('Подробнее', 'transport') . '</a>';
+    return '... <span class="view-article"><a href="' . get_permalink($post->ID) . '">' . __('Подробнее', 'transport') . '</a></span>';
 }
 
 // Remove Admin bar
@@ -423,13 +427,13 @@ function transport_register_custom_posts() {
     $labels = array(
         'name'              => _x( 'Категории Продуктов', 'taxonomy general name' ),
         'singular_name'     => _x( 'Категория Продуктов', 'taxonomy singular name' ),
-        'search_items'      => __( 'Искать Категорию Продуктов' ),
+        'search_items'      => __( 'Поиск' ),
         'all_items'         => __( 'Все Категории Продуктов' ),
         'parent_item'       => __( 'Родительская Категория Продуктов' ),
         'parent_item_colon' => __( 'Родительская Категория Продуктов:' ),
         'edit_item'         => __( 'Редактировать Категорию Продуктов' ),
-        'update_item'       => __( 'Обновить Категорию Продуктов' ),
-        'add_new_item'      => __( 'Добавить Новую Категорию Продуктов' ),
+        'update_item'       => __( 'Обновить' ),
+        'add_new_item'      => __( 'Добавить Новую' ),
         'new_item_name'     => __( 'Название Новой Категории Продуктов' ),
         'menu_name'         => __( 'Категория Продуктов' ),
     );
@@ -448,13 +452,13 @@ function transport_register_custom_posts() {
     $labels = array(
         'name'              => _x( 'Подкатегории Продуктов', 'taxonomy general name' ),
         'singular_name'     => _x( 'Подкатегория Продуктов', 'taxonomy singular name' ),
-        'search_items'      => __( 'Искать Подкатегорию Продуктов' ),
+        'search_items'      => __( 'Поиск' ),
         'all_items'         => __( 'Все Подкатегории Продуктов' ),
         'parent_item'       => __( 'Родительская Подкатегория Продуктов' ),
         'parent_item_colon' => __( 'Родительская Подкатегория Продуктов:' ),
         'edit_item'         => __( 'Редактировать Подкатегорию Продуктов' ),
-        'update_item'       => __( 'Обновить Подкатегорию Продуктов' ),
-        'add_new_item'      => __( 'Добавить Новую Подкатегорию Продуктов' ),
+        'update_item'       => __( 'Обновить' ),
+        'add_new_item'      => __( 'Добавить Новую' ),
         'new_item_name'     => __( 'Название Новой Подкатегории Продуктов' ),
         'menu_name'         => __( 'Подкатегория Продуктов' ),
     );
@@ -495,9 +499,25 @@ function transport_register_custom_posts() {
         'supports' => array('title', 'thumbnail')
     );    
     register_post_type( 'tr_companies_slider' , $args );  
+  
+    $labels = array(
+        'name'              => _x( 'Продукты', 'taxonomy general name' ),
+        'singular_name'     => _x( 'Продукт', 'taxonomy singular name' ),
+        'search_items'      => __( 'Поиск' ),
+        'all_items'         => __( 'Все Продукты' ),
+        'parent_item'       => __( 'Родительский Продукт' ),
+        'parent_item_colon' => __( 'Родительский Продукт:' ),
+        'edit_item'         => __( 'Редактировать' ),
+        'update_item'       => __( 'Обновить' ),
+        'add_new_item'      => __( 'Добавить Новый' ),
+        'add_new'          => __( 'Добавить Новый' ),
+        'new_item_name'     => __( 'Название Нового Продукта' ),
+        'menu_name'         => __( 'Продукты' ),
+    );
 
     $args = array(    
-        'label' => __('Продукты', 'transport'),    
+        'label' => __('Продукты', 'transport'), 
+        'labels' => $labels,    
         'singular_label' => __('Продукт', 'transport'),    
         'public' => true,    
         'show_ui' => true,    

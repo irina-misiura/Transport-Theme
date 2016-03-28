@@ -36,9 +36,9 @@ $current_term = get_term_by('slug', $value, $wp_query->query_vars['taxonomy']);
 					    $products_list = array();
 					    $products = get_posts($args);
 					    if($products): ?>
-						    <ul>
+						    <ul class="menu">
 						    	<?php foreach($products as $product): ?>
-						    		<li><a href="<?php echo get_permalink($product->ID);?>"><?php echo $product->post_title; ?></a></li>
+						    		<li class="menu-item"><a href="<?php echo get_permalink($product->ID);?>"><?php echo $product->post_title; ?></a></li>
 						    	<?php endforeach; ?>
 						    </ul>
 					    <?php endif;
@@ -81,10 +81,10 @@ $current_term = get_term_by('slug', $value, $wp_query->query_vars['taxonomy']);
 							    $products = get_posts($args);
 							    if($products): ?>
 							    
-									<h3><?php echo $term->name; ?></h3>
-								    <div class="row">
+									<h3 class="block-title"><?php echo $term->name; ?></h3>
+								    <div class="row products-list">
 							    		<?php foreach($products as $product): ?>
-							    			<div class="small-12 medium-6 columns">
+							    			<div class="small-12 medium-6 columns product-item">
 							    				<a href="<?php echo get_permalink($product->ID); ?>">
 							    					<?php echo $product->post_title; ?>
 							    				</a>
