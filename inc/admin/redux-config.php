@@ -83,9 +83,9 @@
                 
                 $footer = array(
                     array(
-                        'id'        => 'footer-testing-url',
-                        'type'      => 'text',
-                        'title'     => __('Testing URL', 'transport')
+                        'id'        => 'footer-testing-content',
+                        'type'      => 'editor',
+                        'title'     => __('Контент "Заказать тестирование"', 'transport')
                     ),
                     array(
                         'id'        => 'footer-copyright',

@@ -22,21 +22,25 @@
 						<div class="small-3 medium-3 large-3 columns">
 							<div class="socials-block">
 								<?php if($transport['social-facebook-url']): ?>
-									<a href="<?php echo $transport['social-facebook-url']?>" class="socials facebook"></a>
+									<a href="<?php echo $transport['social-facebook-url']?>" class="socials facebook" target="blank"></a>
 								<?php endif; ?>
 
 								<?php if($transport['social-youtube-url']): ?>
-									<a href="<?php echo $transport['social-youtube-url']?>" class="socials youtube"></a>
+									<a href="<?php echo $transport['social-youtube-url']?>" class="socials youtube" target="blank"></a>
 								<?php endif; ?>
 
 								<?php if($transport['social-linkedin-url']): ?>
-									<a href="<?php echo $transport['social-linkedin-url']?>" class="socials linkedin"></a>
+									<a href="<?php echo $transport['social-linkedin-url']?>" class="socials linkedin" target="blank"></a>
 								<?php endif; ?>
 							</div>
-							<?php if($transport['footer-testing-url']): ?>
-								<a href="<?php echo $transport['footer-testing-url']?>" class="transparent-btn testing">
-									<?php _e('Заказать тестирование');?>
-								</a>
+
+							<?php if($transport['footer-testing-content']): ?>
+								<?php add_thickbox(); ?>
+								<div id="testing-popup" style="display:none;">
+									<?php echo apply_filters('the_content', $transport['footer-testing-content']);?>
+								</div>
+
+								<a href="#TB_inline?width=600&height=400&inlineId=testing-popup" class="thickbox transparent-btn testing"><?php _e('Заказать тестирование');?></a>
 							<?php endif; ?>
 							
 							<?php if(is_active_sidebar('newsletter-subscribe')):?>
@@ -76,6 +80,7 @@
 
 		</div>
 		<!-- /wrapper -->
+		</div></div>
 
 		<?php wp_footer(); ?>
 

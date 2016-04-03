@@ -23,23 +23,66 @@ jQuery(document).ready(function($) {
 		'autoplay': false
 	});
 
-	//handler for search field
-	$('.header .search-wrap .search-submit').on('click', function(event) {
-		event.preventDefault();
 
-		var searchWrap = $(this).parents('.search-wrap');
-		$(document).on('click', function(event) {
-			if (searchWrap.hasClass('visible')) {
-				if (!$(event.target).parents().hasClass('search')) {
-					event.preventDefault();
-					searchWrap.removeClass('visible');
-				} else if ($(event.target).parents().hasClass('search-submit') || $(event.target).hasClass('search-submit')) {
-					if (searchWrap.find('.search-input').val()) {
-						searchWrap.find('form').submit();
-					}
-				}
+	/*--------------------------------------------*\
+		Add google map with address
+	\*--------------------------------------------*/
+
+	var geocoder;
+	var map;
+
+	function initialize() {
+		geocoder = new google.maps.Geocoder();
+		var latlng = new google.maps.LatLng(35.11189781522975, 47.866625577972876);
+
+		var mapOptions = {
+			zoom: 15,
+			center: latlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: false,
+			draggable: false,
+		};
+
+		map = new google.maps.Map(document.getElementById('map-wrapper'), mapOptions);
+	}
+
+	function codeAddress() {
+		geocoder.geocode({
+			'address': address
+		}, function(results, status) {
+
+			if (status == google.maps.GeocoderStatus.OK) {
+
+				map.setCenter(results[0].geometry.location);
+
+				var service = new google.maps.places.PlacesService(map);
+
+				service.getDetails({
+						placeId: results[0].place_id
+					},
+					function(placeResult, status) {
+						if (status != google.maps.places.PlacesServiceStatus.OK) {
+							alert('Не удалось найти детали места.');
+							return;
+						}
+
+						var marker = new google.maps.Marker({
+							map: map,
+							position: placeResult.geometry.location,
+							title: site_title,
+						});
+					});
+
+			} else {
+				alert('Не удалось найти геокод по определенным причинам: ' + status);
 			}
 		});
-		searchWrap.addClass('visible');
+	}
+
+	$(window).on('load', function() {
+		if ($('#map-wrapper').length) {
+			initialize();
+			codeAddress();
+		}
 	});
 });

@@ -25,43 +25,55 @@
 	</head>
 	<body <?php body_class(); ?>>
 		<?php global $transport; ?>
-		<!-- wrapper -->
-		<div class="wrapper">
 
-			<!-- header -->
-			<header class="header" role="banner">
-				<div class="nav-wrap">
-					<div class="row">
+		<div class="off-canvas-wrapper">
+			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+				<div class="off-canvas position-right" id="offCanvas" data-off-canvas data-position="right">
 
-						<!-- logo -->
-						<div class="logo">
-							<a href="<?php echo home_url(); ?>">
-								<!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
-								<?php if($transport['site-logo']['url']):?>
-									<img src="<?php echo $transport['site-logo']['url']; ?>" alt="Logo" class="logo-img">
-								<?php else: ?>
-									<img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.svg" alt="Logo" class="logo-img">
-								<?php endif; ?>
-							</a>
-						</div>
-						<!-- /logo -->
+					<div class="search-wrap">
+						<?php get_template_part('searchform'); ?>
 					</div>
-					<div class="row">
-						<!-- nav -->
-						<nav class="float-center nav" role="navigation">
-							<?php transport_nav(); ?>
-							<div class="search-wrap">
-								<form class="search" method="get" action="<?php echo home_url(); ?>" role="search">
-									<input class="search-input" type="search" name="s" placeholder="<?php _e( 'Введите ключевые слова для поиска', 'transport' ); ?>">
-									<button class="search-submit" type="submit" role="button">
-										<span class="dashicons dashicons-search"></span>
-									</button>
-								</form>
-							</div>
-						</nav>
-						<!-- /nav -->
+					<div class="mobile-menu">
+						<?php transport_nav(); ?>
 					</div>
 				</div>
-			</header>
-			<!-- /header -->
-			<div class="container">
+				<!-- wrapper -->
+				<div class="off-canvas-content wrapper" data-off-canvas-content>
+
+					<!-- header -->
+					<header class="header" role="banner">
+						<div class="nav-wrap">
+							<div class="row">
+
+								<!-- logo -->
+								<div class="logo">
+									<a href="<?php echo home_url(); ?>">
+										<!-- svg logo - toddmotto.com/mastering-svg-use-for-a-retina-web-fallbacks-with-png-script -->
+										<?php if($transport['site-logo']['url']):?>
+											<img src="<?php echo $transport['site-logo']['url']; ?>" alt="Logo" class="logo-img">
+										<?php else: ?>
+											<img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.svg" alt="Logo" class="logo-img">
+										<?php endif; ?>
+									</a>
+								</div>
+								<!-- /logo -->
+
+								<div class="float-right show-for-large search-wrap">
+									<?php get_template_part('searchform'); ?>
+								</div>
+
+								<div class="float-right hide-for-large">
+									<button type="button" class="mobile-btn" data-toggle="offCanvas"><span class="dashicons dashicons-menu"></span></button>
+								</div>
+							</div>
+							<div class="row show-for-large">
+								<!-- nav -->
+								<nav class="float-right nav" role="navigation">
+									<?php transport_nav(); ?>
+								</nav>
+								<!-- /nav -->
+							</div>
+						</div>
+					</header>
+					<!-- /header -->
+					<div class="container">

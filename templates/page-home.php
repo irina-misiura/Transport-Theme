@@ -69,7 +69,7 @@ global $transport;
 					<div class="row">
 						<h3 class="small-12 columns section-title"><?php _e('Наши достижения'); ?></h3>
 						<div class="container">
-							<div class="small-12 medium-4 large-1-5 columns progress-block">
+							<div class="large-1-5 columns progress-block">
 								<?php if($transport['home-block1-title']):?>
 									<h3 class="home-block-title"><?php echo $transport['home-block1-title']; ?></h3>
 								<?php endif;?>
@@ -79,7 +79,7 @@ global $transport;
 									</div>
 								<?php endif;?>
 							</div>
-							<div class="small-12 medium-4 large-1-5 columns progress-block">
+							<div class="large-1-5 columns progress-block">
 								<?php if($transport['home-block2-title']):?>
 									<h3 class="home-block-title"><?php echo $transport['home-block2-title']; ?></h3>
 								<?php endif;?>
@@ -89,7 +89,7 @@ global $transport;
 									</div>
 								<?php endif;?>
 							</div>
-							<div class="small-12 medium-4 large-1-5 columns progress-block">
+							<div class="large-1-5 columns progress-block">
 								<?php if($transport['home-block3-title']):?>
 									<h3 class="home-block-title"><?php echo $transport['home-block3-title']; ?></h3>
 								<?php endif;?>
@@ -99,7 +99,7 @@ global $transport;
 									</div>
 								<?php endif;?>
 							</div>
-							<div class="small-12 medium-4 large-1-5 columns progress-block">
+							<div class="large-1-5 columns progress-block">
 								<?php if($transport['home-block4-title']):?>
 									<h3 class="home-block-title"><?php echo $transport['home-block4-title']; ?></h3>
 								<?php endif;?>
@@ -109,7 +109,7 @@ global $transport;
 									</div>
 								<?php endif;?>
 							</div>
-							<div class="small-12 medium-4 large-1-5 columns progress-block">
+							<div class="large-1-5 columns progress-block">
 								<?php if($transport['home-block5-title']):?>
 									<h3 class="home-block-title"><?php echo $transport['home-block5-title']; ?></h3>
 								<?php endif;?>

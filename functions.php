@@ -75,6 +75,9 @@ function transport_header_scripts() {
         wp_register_script('slick', get_template_directory_uri() . '/assets/slick/slick.min.js', array('jquery')); // Modernizr
         wp_enqueue_script('slick');
 
+        wp_register_script('google-maps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places');
+        wp_enqueue_script('google-maps');
+
         wp_register_script('transportscripts', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
         wp_enqueue_script('transportscripts');
     }
@@ -230,8 +233,37 @@ if (function_exists('register_sidebar')) {
         'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>'
     ));
+
 }
 
+add_filter('wpcf7_messages', 'transport_cf7_messages', $messages);
+
+function transport_cf7_messages($messages) {
+    $messages['mail_sent_ok']['default'] = __( "Сообщение отправлено, спасибо.");
+    $messages['mail_sent_ng']['default'] = __( "Произошла ошибка при попытке отправить сообщение. Пожалуйста, повторите попытку позже.");
+    $messages['validation_error']['default'] =  __( "Ошибка при заполнении одного или нескольких полей. Пожалуйста, проверьте и попробуйте еще раз.");
+    $messages['spam']['default'] = __( "Ошибка при попытке отправить сообщение. Пожалуйста, повторите попытку позже.");
+    $messages['accept_terms']['default'] = __( "Вы должны принять условия перед отправкой сообщения.");
+    $messages['invalid_required']['default'] = __( "Это поле обязательно для заполнения.");
+    $messages['invalid_too_long']['default'] = __( "Поле слишком длинное.");
+    $messages['invalid_too_short']['default'] = __( "Поле слишком короткое.");
+    $messages['invalid_date']['default'] = __( "Неправильный формат даты.");
+    $messages['date_too_early']['default'] = __( "Установленная дата меньше доступной.");
+    $messages['date_too_late']['default'] = __( "Установленная дата больше доступной.");
+    $messages['upload_failed']['default'] = __( "Неизвестная ошибка загрузки файла.");
+    $messages['upload_file_type_invalid']['default'] = __( "Вы не имеете доступа к загрузке файлов данного типа.");
+    $messages['upload_file_too_large']['default'] = __( "Файл слишком большой.");
+    $messages['upload_failed_php_error']['default'] = __( "Ошибка загрузка файла.");    
+    $messages['invalid_number']['default'] = __( "Неправильный формат числа.");
+    $messages['number_too_small']['default'] = __( "Число меньше минимального допустимого.");
+    $messages['number_too_large']['default'] = __( "Число больше максимального допустимого.");
+    $messages['quiz_answer_not_correct']['default'] = __( "Ответ на тест неверный.");
+    $messages['invalid_email']['default'] = __( "Адрес электронной почты введен неверно.");
+    $messages['invalid_url']['default'] = __( "URL является недействительным.");
+    $messages['invalid_tel']['default'] = __( "Номер телефона является недействительным.");
+    
+    return $messages;
+}
 // Remove wp_head() injected Recent Comment styles
 function my_remove_recent_comments_style() {
     global $wp_widget_factory;
@@ -254,6 +286,24 @@ function transport_pagination() {
         'prev_text' => '<',
         'next_text' => '>'
     ));
+}
+
+// Add Google Map
+function transport_display_map() {
+    global $transport;
+    ob_start(); ?>
+        <div class="map-container">
+            <div id="map-wrapper">
+                <script type="text/javascript">
+                    var address = '<?php echo $transport['contacts-map-address']; ?>';
+                    var site_title =  '<?php echo get_bloginfo('name');?>';
+                </script>
+            </div>
+        </div>
+        <?php
+    $output = ob_get_contents();
+    ob_end_clean();
+    return $output; 
 }
 
 // Custom Excerpts
